@@ -1,0 +1,85 @@
+BMJ
+
+-> Equipe: João Guilherme, Marcos, Baima
+-> Mini Sumô: 3 sensores de inimigo (3 frontais) | 4 sensores de linha (2 frontais, 2 traseiros)
+-> Alto Torque | Lâmina Afiada 
+-> Inclinação Ótima da Lâmina
+	5°–8° (mais baixa/quase reta)
+	Melhor para entrar por baixo do oponente
+	Mais eficiente contra robôs baixos
+	Exige muita precisão na altura da lâmina
+	
+	10°–15° (mais inclinada)
+	Ajuda a levantar o adversário
+	Reduz o risco de travar no chão
+	Perde um pouco na capacidade de “raspar” o oponente
+-> Peso acumulado na parte frontal
+-> Máquina de Estado | PID | PWM progressivo 
+-> Múltiplas estratégias | Lógica de Última Visão
+-> 3S | 4S
+-> Chumbo na parte frontal
+-> Rodas de altura média | alta para comportar sensores de linha
+-> Lateral vazada (Para caber bateria e diminuir o peso da carcaça)
+
+Componentes
+
+-> 1 x ESP
+-> 3 x L SUMO'S (2 x L SUMO'S | 1 x TOF)
+-> 4 x LINHA
+-> 1 x IR
+-> 2 x MOTORES
+-> 1 X PONTE H (2 X PONTE H'S CASO 4S) 
+-> 1 X REGULADOR DE TENSÃO
+-> 1 X BARRA DE LED
+-> 2 X RODAS
+
+Motores
+
+Pololu Micro Metal Gearmotor HP 50:1 6V
+Pololu Micro Metal Gearmotor HP 75:1 6V
+N20 100:1
+
+Rodas
+
+-> StickyMAX S20
+Silicone macio (gruda no dojo)
+Excelente para arrancada agressiva
+Muito usada em competições no Brasil
+-> StickyMAX S30 Dura
+Robô muito pesado na frente
+Muito desgaste de pneus
+Quer mais durabilidade
+-> JSumo JS2622
+Silicone de alta qualidade
+Hub rígido (menos perda de energia)
+Muito usadas fora do Brasil
+
+Setup Típico: 
+
+Diâmetro: 28–35 mm
+Largura: 20–35 mm
+Material: silicone macio (Shore baixo, tipo 10A–20A)
+Quantidade: 2 rodas (tração traseira)
+
+Ata
+
+---->Tarefas de programação:
+
+-> GitHub do robô (todo o processo de construção)
+-> Refazer máquina de estado com lógica de varredura (depois + estratégias e lógica de última visão)
+-> PID E PWM progressivo
+
+---->Tarefas de eletrônica:
+
+-> Refazer eletrônica (soldas) e analisar o uso da placa do Luís
+-> Analisar a funcionalidade/uso do sensor TOF e dos sensores de linha (decidir se terá TOF ou não)
+-> Decidir melhor bateria à ser usada (3S ou 4S)
+
+----> Tarefas de mecânica
+
+-> Refazer carcaça com especificações novas ( 3 sensores frontais, 4 sensores de linha, vazado na lateral e inclinação ideal para a lamina, distancia entre os sensores, qual angulo os L' SUMO'S veêm (perguntar pro Luís)
+-> Novas Rodas( com maior raio e com material de maior qualidade)
+-> Motor com torque maior ( 100:1 | 50:1 | 75:1) -> 75:1 é o mais equilibrado entre torque e velocidade
+-> Redistribuir peso no robô (de forma que o peso se concentre na parte frontal [60% frontal | 40% meio/atrás)
+	Cortar a placa de "cobre" 
+	Adicionar chumbo na parte frontal
