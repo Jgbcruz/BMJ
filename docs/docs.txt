@@ -25,13 +25,14 @@ Componentes
 
 -> 1 x ESP
 -> 3 x L SUMO'S (2 x L SUMO'S | 1 x TOF)
--> 4 x LINHA
+-> 2 x LINHA
 -> 1 x IR
 -> 2 x MOTORES
 -> 1 X PONTE H (2 X PONTE H'S CASO 4S) 
 -> 1 X REGULADOR DE TENSÃO
 -> 1 X BARRA DE LED
--> 2 X RODAS
+-> 2 X HUBs
+-> 2 x PNEUS
 
 Motores
 
@@ -65,21 +66,32 @@ Ata
 
 ---->Tarefas de programação:
 
--> GitHub do robô (todo o processo de construção)
--> Refazer máquina de estado com lógica de varredura (depois + estratégias e lógica de última visão)
--> PID E PWM progressivo
+-> Testagem de:
+	- Função que evita queda do Dohyo: evitarBorda()
+	- Função de Varredura Pendular: buscaPendular()
+	- Função do Full Attack: fullAttackDetectado()
+	- Função que determina o PID e constantes (Kp, Kd, Ki): pid()
+	- Saturação dos motores em condições extremas
+	- Ruído nos sensores (possivelmente usar capacitor ou pullup/pulldown)
+	- Latência do Loop (muitos Serial.println())
+	- Função principal: iSeeYou()
+	- Estratégias alternativas de empate
+	- Reset de Estados
+	- Padrão IR de competição
+	- Consumo de energia
+-> PWM progressivo
 
 ---->Tarefas de eletrônica:
 
--> Refazer eletrônica (soldas) e analisar o uso da placa do Luís
+-> Refazer eletrônica (soldas) e analisar o uso da placa do Luís, decidindo qual placa usar
 -> Analisar a funcionalidade/uso do sensor TOF e dos sensores de linha (decidir se terá TOF ou não)
 -> Decidir melhor bateria à ser usada (3S ou 4S)
 
 ----> Tarefas de mecânica
 
--> Refazer carcaça com especificações novas ( 3 sensores frontais, 4 sensores de linha, vazado na lateral e inclinação ideal para a lamina, distancia entre os sensores, qual angulo os L' SUMO'S veêm (perguntar pro Luís)
+-> Refazer carcaça com especificações novas ( 3 sensores frontais, 2 sensores de linha, vazado na lateral e inclinação ideal para a lâmina, distância entre os sensores, qual ângulo os L' SUMO'S veêm (perguntar pro Luís)
 -> Novas Rodas( com maior raio e com material de maior qualidade)
 -> Motor com torque maior ( 100:1 | 50:1 | 75:1) -> 75:1 é o mais equilibrado entre torque e velocidade
--> Redistribuir peso no robô (de forma que o peso se concentre na parte frontal [60% frontal | 40% meio/atrás)
-	Cortar a placa de "cobre" 
-	Adicionar chumbo na parte frontal
+-> Redistribuir peso no robô (de forma que o peso se concentre na parte frontal e no meio [60% frontal | 40% meio)
+	Cortar a base até os 12-15º 
+	Adicionar chumbo na parte frontal/meio
