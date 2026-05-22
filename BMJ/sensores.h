@@ -9,7 +9,7 @@
 #define linhaEsq XX
 #define linhaDir XX
 
-uint8_t sensores[] = {FEsq, Frente, FDir};
+uint8_t sensores[] = {FEsq, Frente, FDir, linhaEsq, linhaDir};
 
 void setupSensores() {
   pinMode(FEsq, INPUT);

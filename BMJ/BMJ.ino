@@ -17,6 +17,7 @@
 #include "PID.h"
 #include "Empate.h"
 #include "LEDFX.h"
+#include "placa.h"
 
 
 #define boot 0

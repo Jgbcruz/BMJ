@@ -89,7 +89,6 @@ void ledDetection() {
     pixels.setPixelColor((LED4 - 1) % NUMPIXELS, pixels.Color(0, 0, 150));
   }
 
-  }
   else {
     Serial.println("PROCURANDO OBJETO");
   }
