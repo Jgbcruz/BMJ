@@ -10,7 +10,7 @@ void paraTras() { // estratégia número 5 no controle
 int EstadoAtual;
 
 void EstadoUpdate(){  // função que atualiza os estados
-  leituraSensoresSD();
+  leituraSensores();
   EstadoAtual = 1; // sem inimigo
   if(leitura[1]){ //enxergando com o sensor frontal
     EstadoAtual = 2;

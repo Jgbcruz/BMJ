@@ -1,6 +1,15 @@
 #ifndef pid_H
 #define pid_H
 
+#include "sensores.h"
+
+enum estadoPendulo {
+    DIREITA,
+    MEIA_ESQUERDA,
+    ESQUERDA,
+    MEIA_DIREITA
+};
+
 // Leitura dos Sensores
 // [0] = Frente Esquerda
 // [1] = Frente
@@ -31,10 +40,11 @@ float Kd = 120.0;
 
 unsigned long last_time = 0;
 
-bool pendulo_direita = true;
-
 unsigned long ultimo_pendulo = 0;
-const int tempo_pendulo = 350; //ms
+
+estadoPendulo estadoAtual = DIREITA;
+
+const int tempo_pendulo = 180; //ms
 
 
 // quantidade de ciclos consecutivos
@@ -49,13 +59,6 @@ void leituraSensores() {
     leitura[1] = digitalRead(Frente);
     leitura[2] = digitalRead(FDir);
 }
-
-void leituraSensoresSD() { // leitura diferente exclusiva pra Seek and Destroy
-  leitura[0] = digitalRead(FEsq);
-  leitura[1] = digitalRead(Frente);
-  leitura[2] = digitalRead(FDir);
-}
-
 
 void calculoErroAngular() {
 
@@ -117,28 +120,41 @@ void pid() {
     last_time = current_time;
 }
 
-// BUSCA PENDULAR
+// VARREDURA PENDULAR
 
-void buscaPendular() {
+estadoPendulo varreduraPendular(estadoPendulo estadoAtual)
+{
 
     unsigned long agora = millis();
 
-    if ((agora - ultimo_pendulo) > tempo_pendulo) {
-
-        pendulo_direita = !pendulo_direita;
+    if((agora-ultimo_pendulo) => tempo_pendulo) {
 
         ultimo_pendulo = agora;
+
+        switch(estadoAtual) {
+
+            case DIREITA:
+                mover(700,-700);
+                return MEIA_ESQUERDA;
+
+            case MEIA_ESQUERDA:
+                mover(-700,700);
+                return ESQUERDA;
+
+            case ESQUERDA:
+                mover(-700,700);
+                return MEIA_DIREITA;
+
+            case MEIA_DIREITA:
+                mover(700,-700);
+                return DIREITA;
+        }
     }
 
-    if (pendulo_direita) {
+    return estadoAtual;
 
-        mover(700, -700);
-
-    } else {
-
-        mover(-700, 700);
-    }
 }
+
 
 // FULL ATTACK
 
@@ -169,7 +185,7 @@ void iSeeYou() { // estratégia número 4 no controle
 
     if (!leitura[0] && !leitura[1] && !leitura[2]) {
 
-        buscaPendular();
+        estadoAtual = varreduraPendular(estadoAtual);
 
         return;
     }

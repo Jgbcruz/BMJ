@@ -10,7 +10,7 @@
 //#define PID_2222
 
 #include <Arduino.h>
-#include <SumoIR.h>
+#include "SumoIR.h"
 
 #include "motores.h"
 #include "sensores.h"
@@ -27,6 +27,7 @@ int strategy = 0;
 SumoIR IR;
 
 void setup() {
+
   Serial.begin(115200);
 
   IR.begin(IR_PIN); 

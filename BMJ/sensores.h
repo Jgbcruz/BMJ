@@ -3,9 +3,9 @@
 
 //BMJ
 // ultima atualização 16/05/2026
-#define FEsq XX
-#define Frente XX
-#define FDir XX
+#define FEsq 12
+#define Frente 7
+#define FDir 8
 #define linhaEsq XX
 #define linhaDir XX
 
