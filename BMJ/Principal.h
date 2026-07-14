@@ -1,5 +1,5 @@
-#ifndef pid_H
-#define pid_H
+#ifndef Principal_H
+#define Principal_H
 
 #include "sensores.h"
 
@@ -16,8 +16,6 @@ enum estadoPendulo {
 // [2] = Frente Direita
 
 int leitura[3];
-
-bool evitarBorda();
 
 int vel_base = 650;
 float erro_angular = 0;
@@ -43,7 +41,7 @@ unsigned long last_time = 0;
 unsigned long ultimo_pendulo = 0;
 
 estadoPendulo estadoAtual = DIREITA;
-
+ 
 const int tempo_pendulo = 180; //ms
 
 
@@ -127,7 +125,7 @@ estadoPendulo varreduraPendular(estadoPendulo estadoAtual)
 
     unsigned long agora = millis();
 
-    if((agora-ultimo_pendulo) => tempo_pendulo) {
+    if((agora-ultimo_pendulo) >= tempo_pendulo) {
 
         ultimo_pendulo = agora;
 
@@ -161,7 +159,7 @@ estadoPendulo varreduraPendular(estadoPendulo estadoAtual)
 bool fullAttackDetectado() {
 
     // frontal detectado
-    if (!leitura[0] && leitura[1] && !leitura[2]) {
+    if (leitura[0] && leitura[1] && leitura[2]) {
 
         ataque_confirmado++;
 
@@ -178,7 +176,6 @@ bool fullAttackDetectado() {
 
 void iSeeYou() { // estratégia número 4 no controle
 
-    if(evitarBorda()) return;
     leituraSensores();
 
     // SEM ALVO -> VARREDURA PENDULAR
@@ -190,7 +187,7 @@ void iSeeYou() { // estratégia número 4 no controle
         return;
     }
 
-    // SOMENTE SENSOR FRONTAL -> FULL ATTACK
+    // OS 3 SENSORES -> FULL ATTACK
 
     if (fullAttackDetectado()) {
 
@@ -218,77 +215,77 @@ void iSeeYou() { // estratégia número 4 no controle
     mover(velocidade_esq, velocidade_dir);
 }
 
-bool evitarBorda() {
+// bool evitarBorda() {
 
-    bool linha_esq = digitalRead(linhaEsq);
-    bool linha_dir = digitalRead(linhaDir);
+//     bool linha_esq = digitalRead(linhaEsq);
+//     bool linha_dir = digitalRead(linhaDir);
 
-    if (!linha_esq && !linha_dir) {
-        return false;
-    }
+//     if (!linha_esq && !linha_dir) {
+//         return false;
+//     }
 
-    Serial.println("!!! BORDA DETECTADA !!!");
+//     Serial.println("!!! BORDA DETECTADA !!!");
 
-    // trava curta
-    parar();
-    delay(5);
+//     // trava curta
+//     parar();
+//     delay(5);
 
-    // BORDA ESQUERDA
+//     // BORDA ESQUERDA
 
-    if (linha_esq && !linha_dir) {
+//     if (linha_esq && !linha_dir) {
 
-        Serial.println("BORDA ESQUERDA");
+//         Serial.println("BORDA ESQUERDA");
 
-        // micro-recuo angular
-        mover(-700, -250);
-        delay(90);
+//         // micro-recuo angular
+//         mover(-700, -250);
+//         delay(90);
 
-        // gira rapidamente para dentro
-        mover(850, -850);
-        delay(140);
-    }
+//         // gira rapidamente para dentro
+//         mover(850, -850);
+//         delay(140);
+//     }
 
-    // BORDA DIREITA
+//     // BORDA DIREITA
 
-    else if (linha_dir && !linha_esq) {
+//     else if (linha_dir && !linha_esq) {
 
-        Serial.println("BORDA DIREITA");
+//         Serial.println("BORDA DIREITA");
 
-        // micro-recuo angular
-        mover(-250, -700);
-        delay(90);
+//         // micro-recuo angular
+//         mover(-250, -700);
+//         delay(90);
 
-        // gira rapidamente para dentro
-        mover(-850, 850);
-        delay(140);
-    }
+//         // gira rapidamente para dentro
+//         mover(-850, 850);
+//         delay(140);
+//     }
 
-    // BORDA FRONTAL
+//     // BORDA FRONTAL
 
-    else {
+//     else {
 
-        Serial.println("BORDA FRONTAL");
+//         Serial.println("BORDA FRONTAL");
 
-        // recuo curto
-        mover(-850, -850);
-        delay(120);
+//         // recuo curto
+//         mover(-850, -850);
+//         delay(120);
 
-        // escolhe direção usando último erro PID
-        if (erro_angular >= 0) {
+//         // escolhe direção usando último erro PID
+//         if (erro_angular >= 0) {
 
-            mover(-850, 850);
+//             mover(-850, 850);
 
-        } else {
+//         } else {
 
-            mover(850, -850);
-        }
+//             mover(850, -850);
+//         }
 
-        delay(180);
-    }
+//         delay(180);
+//     }
 
-    parar();
+//     parar();
 
-    return true;
-}
+//     return true;
+// }
 
 #endif
