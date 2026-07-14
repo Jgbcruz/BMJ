@@ -1,7 +1,7 @@
-#ifndef empate_H
-#define empate_H
+#ifndef Estrategias_H
+#define Estrategias_H
 
-#include "PID.h"
+#include "Principal.h"
 
 void paraTras() { // estratégia número 5 no controle
   mover(-1023, -1023);
@@ -25,7 +25,6 @@ void EstadoUpdate(){  // função que atualiza os estados
 }
 
 void SeekAndDestroy_L(){  // estratégia número 6 no controle
-  if(evitarBorda()) return;
   EstadoUpdate(); // função atualiza o estado a todo momento
   switch (EstadoAtual){
     case 1:
@@ -55,7 +54,6 @@ void SeekAndDestroy_L(){  // estratégia número 6 no controle
 }
 
 void SeekAndDestroy_R(){  // estratégia número 7 no controle
-  if(evitarBorda()) return;
   EstadoUpdate(); // função atualiza o estado a todo momento
 
   switch (EstadoAtual){
