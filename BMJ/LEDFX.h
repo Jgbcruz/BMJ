@@ -1,104 +1,34 @@
 #ifndef ledFX_H
 #define ledFX_H
-#include "PID.h"
 #include <Adafruit_NeoPixel.h>
 
-#define LED4 X
-#define LED5 X
-#define LED6 X
-#define LED7 X
-#define LED1 X
-#define PIN X //pino do anel de leds
-#define NUMPIXELS X // quantidade de leds do anel
-Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800); // necessario
-
-void ledBlink(int r, int g, int b, int time) {    // pisca todas os leds em um intervalo de tempo
-  pixels.clear();
-  for(int i=0; i<NUMPIXELS; i++) { 
-    pixels.setPixelColor(i, pixels.Color(r, g, b));
-    pixels.show();
-  }
-  pixels.clear();
-  delay(time);
-  for(int i=0; i<NUMPIXELS; i++) { 
-    pixels.setPixelColor(i, pixels.Color(0, 0, 0));
-    pixels.show();    
-  }
-  delay(time);
-}
-/*----------------------------------------------------------------------------------------*/
-void ledLight (int r, int g, int b) {   // luz contínua
-  pixels.clear();
-  for(int i=0; i<NUMPIXELS; i++) { 
-    pixels.setPixelColor(i, pixels.Color(r, g, b));
-    pixels.show();    
-  }
-}
-/*----------------------------------------------------------------------------------------*/
-void ledCircle(int r, int g, int b, int time) {   // luzes "andam" em círculo numa certa velocidade dependendo do tempo
-  pixels.clear();
-  for(int i=0; i<NUMPIXELS; i++) { 
-    pixels.setPixelColor(i, pixels.Color(r, g, b));
-    pixels.show();    
-    delay(time);
-    pixels.clear(); 
-  }
-}
-/*----------------------------------------------------------------------------------------*/
-void ledCircleBlink(int r, int g, int b, int time) {  // luzes "andam" em círculo e piscam no final numa certa velocidade dependendo do tempo
-  pixels.clear();
-  for(int i=0; i<NUMPIXELS; i++) { 
-    pixels.setPixelColor(i, pixels.Color(r, g, b));
-    pixels.show();    
-  }
-  for(int i=0; i<NUMPIXELS; i++) { 
-    pixels.setPixelColor(i, pixels.Color(r, g, b));
-    pixels.show();
-    delay(time);
-    pixels.clear();
-  }
-}
+#define LED_PIN 2 //pino do anel de leds
+#define NUMPIXELS 8 // quantidade de leds do anel
+Adafruit_NeoPixel pixels(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800); // necessario
 
 
-void setDefaultColor(uint8_t r, uint8_t g, uint8_t b) {
+const auto azul  = pixels.Color(0,   0,   150);
+const auto verde = pixels.Color(150, 0,   0);
+
+void setar_cor_leds(uint8_t r, uint8_t g, uint8_t b) {
   for (uint8_t i = 0; i < NUMPIXELS; i++) {
     pixels.setPixelColor(i, pixels.Color(r, g, b));
   }
 }
 
+void mostra_sensores_no_led(int leitura[]) {
+  setar_cor_leds(3, 5, 3); // Define a cor padrão para todos os LEDs
 
-void ledDetection() {
-  setDefaultColor(150, 0, 0); // Define cor padrão
-  leituraSensores();
-   
-  if (leitura[0]) {
-    Serial.println("ESQUERDA DETECTADA");
-    pixels.setPixelColor(LED7, pixels.Color(0, 150, 0));              // LED principal
-    pixels.setPixelColor((LED7 - 1) % NUMPIXELS, pixels.Color(0, 150, 0)); // LED ao lado
-  }
-
-  if (leitura[1]) {
-    Serial.println("FRONTAL DETECTADO");
-    pixels.setPixelColor(LED5, pixels.Color(0, 0, 150));
-    pixels.setPixelColor((LED5 + 1) % NUMPIXELS, pixels.Color(0, 0, 150));
-  }
-
-  if (leitura[2]) {
-    Serial.println("DIREITA DETECTADA");
-    pixels.setPixelColor(LED4, pixels.Color(0, 0, 150));
-    pixels.setPixelColor((LED4 - 1) % NUMPIXELS, pixels.Color(0, 0, 150));
-  }
-
-  else {
-    Serial.println("PROCURANDO OBJETO");
-  }
+  if (leitura[0]) pixels.setPixelColor(5, azul);
+  if (leitura[1]) pixels.setPixelColor(4, azul);
+  if (leitura[2]) pixels.setPixelColor(3, azul);
 
   pixels.show();
-  delay(10);
+}
+void mostra_estrategia_no_led(int num_estrategia) {
+  setar_cor_leds(3, 5, 3);
+  for (uint8_t i = 0; i < (num_estrategia - 3); i++) pixels.setPixelColor(i, verde);
+  pixels.show();
 }
 
-
-
-
-#endif
-
+#endif //ledFX_H

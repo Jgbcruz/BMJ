@@ -132,19 +132,19 @@ estadoPendulo varreduraPendular(estadoPendulo estadoAtual)
         switch(estadoAtual) {
 
             case DIREITA:
-                mover(700,-700);
+                mover(500,-500);
                 return MEIA_ESQUERDA;
 
             case MEIA_ESQUERDA:
-                mover(-700,700);
+                mover(-500,500);
                 return ESQUERDA;
 
             case ESQUERDA:
-                mover(-700,700);
+                mover(-500,500);
                 return MEIA_DIREITA;
 
             case MEIA_DIREITA:
-                mover(700,-700);
+                mover(500,-500);
                 return DIREITA;
         }
     }
@@ -175,7 +175,7 @@ bool fullAttackDetectado() {
 // TARGET TRACKER PRINCIPAL
 
 void iSeeYou() { // estratégia número 4 no controle
-
+    //if(evitarBorda()) return;
     leituraSensores();
 
     // SEM ALVO -> VARREDURA PENDULAR
