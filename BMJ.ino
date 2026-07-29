@@ -1,15 +1,9 @@
 /*
   BMJ
-  14/07/2026, para a CCBB;
+  29/07/2026, para a RIW;
   Modo AUTÔNOMO usando SumoIR;
 
   https://github.com/Jgbcruz/BMJ
-  tarefas restantes:
-  - calibrar o PID
-  - 3 novas estragtegias sendo uma deas de empate
-  - Tentar implementar o led
-  - Reimprimir carcaça 
-  - 
 */
 
 
@@ -66,7 +60,7 @@ void loop() {
     else if (IR.prepare()) { // número 1 no controle
       // setar_cor_leds(255,255,0);
       // pixels.show();
-      digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+      digitalWrite(LED_PIN, HIGH);
       delay(20);      
       parar();
       Serial.println("-> sumo prepare"); 
@@ -110,10 +104,13 @@ void loop() {
     else { // robô inicia caindo aqui
       // pixels.clear();
       // pixels.show();
-      digitalWrite(LED_PIN, LOW);      
+      digitalWrite(LED_PIN, LOW);
       int cmd = IR.read();
       if (cmd >= 4 && cmd <= 7) { 
         strategy = cmd;
+        digitalWrite(LED_PIN, HIGH);
+        delay(100);
+        digitalWrite(LED_PIN, LOW);      
       } else return;
       Serial.println("-> sumo off"); 
     }
