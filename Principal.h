@@ -17,7 +17,7 @@ enum estadoPendulo {
 
 int leitura[3];
 
-int vel_base = 500;
+int vel_base = 400;
 float erro_angular = 0;
 float erro_anterior = 0;
 
@@ -28,7 +28,7 @@ float D = 0;
 float PID = 0;
 
 // Somente PD 
-float Kp = 200.0;
+float Kp = 140.0;
 float Ki = 0.0;
 float Kd = 0.0;
 // Para a melhor calibração das constantes, deve-se:
@@ -42,14 +42,14 @@ unsigned long ultimo_pendulo = 0;
 
 estadoPendulo estadoAtual = DIREITA;
  
-const int tempo_pendulo = 180; //ms
+const int tempo_pendulo = 150; //ms
 
 
 // quantidade de ciclos consecutivos
 // detectando frontal
 int ataque_confirmado = 0;
 
-const int ATAQUE_THRESHOLD = 3;
+const int ATAQUE_THRESHOLD = 2;
 
 
 void leituraSensores() {
@@ -60,10 +60,8 @@ void leituraSensores() {
 
 void calculoErroAngular() {
 
-    leituraSensores();
-
     // geometria angular
-    float peso[3] = {-1.0, 0.0, 1.0};
+    float peso[3] = {-2.0, 0.0, 2.0};
 
     float soma_pesos = 0;
     int ativos = 0;
@@ -95,27 +93,18 @@ void calculoErroAngular() {
 
 void pid() {
 
-    unsigned long current_time = millis();
-
-    float dt = (current_time - last_time) / 1000.0;
-
-    if (dt <= 0)
-        dt = 0.001;
-
     calculoErroAngular();
 
     P = erro_angular;
 
     // Integral desligada
-    I += erro_angular * dt;
+    I += erro_angular;
 
-    D = (erro_angular - erro_anterior) / dt;
+    D = erro_angular - erro_anterior;
 
     PID = (Kp * P) + (Ki * I) + (Kd * D);
 
     erro_anterior = erro_angular;
-
-    last_time = current_time;
 }
 
 // VARREDURA PENDULAR
@@ -181,7 +170,7 @@ void iSeeYou() { // estratégia número 4 no controle
     // SEM ALVO -> VARREDURA PENDULAR
 
     if (!leitura[0] && !leitura[1] && !leitura[2]) {
-
+        
         estadoAtual = varreduraPendular(estadoAtual);
 
         return;
